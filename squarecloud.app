@@ -3,5 +3,5 @@ VERSION=recommended
 MEMORY=950
 DISPLAY_NAME=DealHunter
 DESCRIPTION=Caçador de ofertas, alertas e comparação de preços
-START=pnpm install --frozen-lockfile --prod=false && pnpm run build && pnpm run start
+START=npx --yes pnpm@10.4.1 install --frozen-lockfile --prod=false && npx --yes pnpm@10.4.1 run build && node dist/index.js
 AUTORESTART=true
