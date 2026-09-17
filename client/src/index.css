@@ -1,0 +1,13 @@
+@import url('https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=DM+Sans:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap');
+@import "tailwindcss";
+@import "tw-animate-css";
+
+:root { --background: #08070d; --foreground: #f6f1ff; --card: #100d17; --card-foreground: #f6f1ff; --popover: #15101e; --popover-foreground: #f6f1ff; --primary: #a855f7; --primary-foreground: #ffffff; --secondary: #1b1029; --secondary-foreground: #d8b4fe; --muted: #17121f; --muted-foreground: #9d90a6; --accent: #c084fc; --accent-foreground: #100d17; --border: rgba(255,255,255,.1); --input: rgba(255,255,255,.12); --ring: #a855f7; }
+* { border-color: var(--border); }
+html { scroll-behavior: smooth; }
+body { margin: 0; min-width: 320px; background: var(--background); color: var(--foreground); font-family: 'DM Sans', sans-serif; }
+h1, h2, h3, h4, strong { font-family: 'Plus Jakarta Sans', sans-serif; }
+button, a, input, select, textarea { transition: all 160ms cubic-bezier(.23, 1, .32, 1); }
+button:active { transform: scale(.97); }
+::selection { background: #a855f7; color: #fff; }
+@media (prefers-reduced-motion: reduce) { *, *::before, *::after { scroll-behavior: auto !important; transition-duration: .01ms !important; animation-duration: .01ms !important; animation-iteration-count: 1 !important; } }
