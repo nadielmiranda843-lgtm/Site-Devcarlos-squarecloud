@@ -13,7 +13,7 @@ const deals = [
   { id: 1, title: "Sony PlayStation 5 Slim", store: "Best Buy", price: 449.99, old: 499.99, score: 96, safety: "Seguro", category: "Eletrônicos", trend: "Espere 2 dias", image: "https://images.unsplash.com/photo-1606813907291-d86efa9b94db?auto=format&fit=crop&w=900&q=80" },
   { id: 2, title: "Apple AirPods Pro 2", store: "Amazon US", price: 169.99, old: 249.99, score: 94, safety: "Seguro", category: "Eletrônicos", trend: "Compre agora", image: "https://images.unsplash.com/photo-1606220945770-b5b6c2c55bf1?auto=format&fit=crop&w=900&q=80" },
   { id: 3, title: "Nike Air Max Dn", store: "Nike Outlet", price: 89.00, old: 160.00, score: 89, safety: "Seguro", category: "Moda", trend: "Queda provável", image: "https://images.unsplash.com/photo-1542291026-7eec264c27ff?auto=format&fit=crop&w=900&q=80" },
-  { id: 4, title: "MacBook Air M2 recondicionado", store: "eBay", price: 699.00, old: 999.00, score: 72, safety: "Verificar", category: "Eletrônicos", trend: "Compre agora", image: "https://images.unsplash.com/photo-1517336714739-489689fd1ca8?auto=format&fit=crop&w=900&q=80" },
+  { id: 4, title: "MacBook Air M2 recondicionado", store: "eBay", price: 699.00, old: 999.00, score: 72, safety: "Verificar", category: "Eletrônicos", trend: "Compre agora", image: "https://images.unsplash.com/photo-1541807084-5c52b6b3adef?auto=format&fit=crop&w=900&q=80" },
 ];
 
 export function DealsHome() {
