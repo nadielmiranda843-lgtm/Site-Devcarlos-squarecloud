@@ -30,3 +30,13 @@ button:active { transform: scale(.97); }
 @keyframes dh-orbit { from { transform: rotate(0deg) translateX(8px) rotate(0deg); } to { transform: rotate(360deg) translateX(8px) rotate(-360deg); } }
 @media (prefers-reduced-motion: reduce) { .dh-pulse, .dh-float { animation: none; } }
 @media (prefers-reduced-motion: reduce) { *, *::before, *::after { scroll-behavior: auto !important; transition-duration: .01ms !important; animation-duration: .01ms !important; animation-iteration-count: 1 !important; } }
+
+.dh-locator { background: radial-gradient(circle at 50% -5%, rgba(21,109,255,.12), transparent 28rem); }
+.dh-locator-rays { background: radial-gradient(ellipse at 50% 42%, rgba(0,134,255,.18), transparent 28%), repeating-conic-gradient(from 0deg at 50% 43%, rgba(23,112,255,.08) 0deg 2deg, transparent 2deg 16deg); mask-image: radial-gradient(ellipse, black, transparent 70%); }
+.dh-globe-art { filter: drop-shadow(0 0 24px rgba(0,125,255,.8)); }
+.dh-globe-grid { background: repeating-linear-gradient(0deg, transparent 0 15px, rgba(60,183,255,.2) 16px 17px), repeating-linear-gradient(90deg, transparent 0 15px, rgba(60,183,255,.2) 16px 17px); mask-image: radial-gradient(circle, black 45%, transparent 72%); transform: perspective(250px) rotateX(14deg); }
+@media (prefers-reduced-motion: reduce) { .dh-globe, .dh-orbit, .dh-locator-rays { animation: none; } }
+@keyframes dh-locator-scan { from { transform: translateY(-120%); } to { transform: translateY(120%); } }
+.dh-globe-art::after { content: ""; position: absolute; inset: 12%; border-radius: 50%; background: linear-gradient(180deg, transparent 42%, rgba(60,194,255,.32) 50%, transparent 58%); animation: dh-locator-scan 4s ease-in-out infinite; pointer-events: none; }
+@keyframes dh-locator-glow { 0%, 100% { opacity: .55; } 50% { opacity: 1; } }
+.dh-globe-art { animation: dh-globe 14s linear infinite, dh-locator-glow 3s ease-in-out infinite; }
