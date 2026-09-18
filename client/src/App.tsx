@@ -7,13 +7,14 @@ import PrivacyConsent from "./components/PrivacyConsent";
 import { ThemeProvider } from "./contexts/ThemeContext";
 import Admin from "./pages/Admin";
 import { AuthPage, PrivacyPage, ProfilePage, SupportPage } from "./pages/CentralPages";
-import { AlertsPage, AppPage, DealsHome, ExtensionPage, OffersPage, PremiumPage, RankingPage, ShippingPage, WholesalePage } from "./pages/DealsPages";
+import { AlertsPage, AppPage, ComparePage, DealsHome, ExtensionPage, OffersPage, PremiumPage, RankingPage, ShippingPage, WholesalePage } from "./pages/DealsPages";
 
 function Router() {
   return <Switch>
     <Route path="/" component={DealsHome} />
     <Route path="/ofertas" component={OffersPage} />
     <Route path="/alertas" component={AlertsPage} />
+    <Route path="/comparar" component={ComparePage} />
     <Route path="/ranking" component={RankingPage} />
     <Route path="/premium" component={PremiumPage} />
     <Route path="/lotes" component={WholesalePage} />

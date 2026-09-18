@@ -7,6 +7,7 @@ const items = [
   { href: "/", label: "Caçador", icon: Radar },
   { href: "/ofertas", label: "Ofertas", icon: PackageSearch },
   { href: "/alertas", label: "Drop Alerts", icon: Bell },
+  { href: "/comparar", label: "Comparar preços", icon: BarChart3 },
   { href: "/ranking", label: "Ranking", icon: Trophy },
   { href: "/premium", label: "Premium", icon: Crown },
   { href: "/lotes", label: "Lotes B2B", icon: ShieldCheck },
