@@ -6,6 +6,8 @@
 * { border-color: var(--border); }
 html { scroll-behavior: smooth; }
 body { margin: 0; min-width: 320px; background: var(--background); color: var(--foreground); font-family: 'DM Sans', sans-serif; background-image: linear-gradient(rgba(83,112,190,.035) 1px, transparent 1px), linear-gradient(90deg, rgba(83,112,190,.035) 1px, transparent 1px), radial-gradient(circle at 12% 0%, rgba(49,84,255,.13), transparent 28rem); background-size: 44px 44px, 44px 44px, auto; }
+#root { width: 100%; min-width: 0; overflow-x: hidden; }
+html, body { max-width: 100%; overflow-x: hidden; }
 h1, h2, h3, h4, strong { font-family: 'Plus Jakarta Sans', sans-serif; }
 button, a, input, select, textarea { transition: all 160ms cubic-bezier(.23, 1, .32, 1); }
 button:active { transform: scale(.97); }
@@ -17,6 +19,8 @@ button:active { transform: scale(.97); }
 .dh-panel:hover { transform: translateY(-3px); border-color: rgba(103,143,255,.58) !important; box-shadow: 0 22px 70px rgba(17,43,112,.28), inset 0 1px 0 rgba(255,255,255,.06); }
 .dh-row { border-color: rgba(79,111,190,.25) !important; background: rgba(15,27,49,.74) !important; }
 .dh-sidebar { box-shadow: 18px 0 60px rgba(0,0,0,.24); }
+.dh-mobile-drawer, .dh-mobile-drawer-backdrop { touch-action: none; overscroll-behavior: none; }
+.dh-mobile-drawer { overflow: hidden; }
 .dh-nav-active { position: relative; }
 .dh-nav-active::before { content: ""; position: absolute; left: -1px; top: 25%; height: 50%; width: 3px; border-radius: 0 5px 5px 0; background: #69e2bd; box-shadow: 0 0 14px #69e2bd; }
 .dh-pulse { animation: dh-pulse 2.8s ease-in-out infinite; }
