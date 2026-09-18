@@ -29,9 +29,9 @@ export default function DealsLayout({ children }: { children: React.ReactNode })
   }, []);
   const active = (href: string) => href === "/" ? location === "/" : location.startsWith(href);
   const navigateSearch = () => { if (query.trim()) window.location.href = `/ofertas?search=${encodeURIComponent(query.trim())}`; };
-  const nav = (itemsList: typeof items) => itemsList.map(({ href, label, icon: Icon }) => <Link key={href} href={href} onClick={() => setOpen(false)} className={`group flex items-center gap-3 rounded-xl px-3 py-3 text-sm font-semibold ${active(href) ? "bg-[#3154ff] text-white shadow-[0_8px_28px_rgba(49,84,255,.28)]" : "text-[#8f9db7] hover:bg-white/[.06] hover:text-white"}`}><Icon className="size-[18px]" /><span>{label}</span>{active(href) && <ChevronRight className="ml-auto size-3.5 opacity-70" />}</Link>);
-  return <div className="min-h-screen bg-[#070a12] text-[#eef4ff]">
-    <aside className="fixed inset-y-0 left-0 z-40 hidden w-[264px] border-r border-[#202b47] bg-[#0b1020] lg:flex lg:flex-col">
+  const nav = (itemsList: typeof items) => itemsList.map(({ href, label, icon: Icon }) => <Link key={href} href={href} onClick={() => setOpen(false)} className={`group dh-nav-item flex items-center gap-3 rounded-xl px-3 py-3 text-sm font-semibold ${active(href) ? "dh-nav-active bg-[#3154ff] text-white shadow-[0_8px_28px_rgba(49,84,255,.28)]" : "text-[#8f9db7] hover:bg-white/[.06] hover:text-white"}`}><Icon className="size-[18px]" /><span>{label}</span>{active(href) && <ChevronRight className="ml-auto size-3.5 opacity-70" />}</Link>);
+  return <div className="dh-page min-h-screen bg-[#070a12] text-[#eef4ff]">
+    <aside className="dh-sidebar fixed inset-y-0 left-0 z-40 hidden w-[264px] border-r border-[#202b47] bg-[#0b1020] lg:flex lg:flex-col">
       <Brand />
       <div className="mx-4 mb-6 rounded-2xl border border-[#3154ff]/25 bg-[linear-gradient(135deg,#121d43,#11162a)] p-4"><div className="flex items-center justify-between"><p className="font-mono text-[10px] uppercase tracking-[.18em] text-[#89a3ff]">DealHunter</p><span className="flex items-center gap-1.5 text-[10px] text-[#69e2bd]"><i className="size-1.5 rounded-full bg-[#55e3b3]" />online</span></div><p className="mt-3 text-sm font-bold">Seu radar de economia</p><p className="mt-1 text-[11px] leading-relaxed text-[#8997b2]">Compare antes de comprar.</p></div>
       <div className="flex-1 overflow-y-auto px-3"><p className="mb-2 px-3 font-mono text-[9px] uppercase tracking-[.2em] text-[#63718d]">Explorar</p><nav className="space-y-1">{nav(items)}</nav><p className="mb-2 mt-7 px-3 font-mono text-[9px] uppercase tracking-[.2em] text-[#63718d]">Ferramentas</p><nav className="space-y-1">{nav(tools)}</nav></div>
@@ -46,4 +46,4 @@ export default function DealsLayout({ children }: { children: React.ReactNode })
     <AuthDialog open={authOpen} onOpenChange={setAuthOpen} initialMode={authMode} />
   </div>;
 }
-function Brand() { return <Link href="/" className="mb-7 flex items-center gap-3 px-5 pt-5"><img src="/assets/dealhunter-logo-transparent.png" alt="DealHunter" className="h-10 w-[178px] object-contain object-left" /></Link>; }
+function Brand() { return <Link href="/" className="mb-7 flex items-center gap-3 px-5 pt-5"><img src="/assets/dealhunter-logo-transparent.png" alt="DealHunter" className="dh-float h-10 w-[178px] object-contain object-left" /></Link>; }
