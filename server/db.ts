@@ -23,6 +23,7 @@ sqlite.exec(`
   CREATE TABLE IF NOT EXISTS services (id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT NOT NULL, durationMinutes INTEGER NOT NULL, price TEXT NOT NULL, active INTEGER NOT NULL DEFAULT 1);
   CREATE TABLE IF NOT EXISTS orders (id INTEGER PRIMARY KEY AUTOINCREMENT, userId INTEGER NOT NULL, status TEXT NOT NULL DEFAULT 'pending', total TEXT NOT NULL, paymentMethod TEXT, stripePaymentIntentId TEXT, createdAt TEXT NOT NULL);
   CREATE TABLE IF NOT EXISTS appointments (id INTEGER PRIMARY KEY AUTOINCREMENT, userId INTEGER NOT NULL, petName TEXT NOT NULL, service TEXT NOT NULL, startsAt TEXT NOT NULL, status TEXT NOT NULL DEFAULT 'requested', transport TEXT NOT NULL, pickupAddress TEXT, createdAt TEXT NOT NULL);
+  CREATE TABLE IF NOT EXISTS aiChatMessages (id INTEGER PRIMARY KEY AUTOINCREMENT, userId INTEGER NOT NULL, role TEXT NOT NULL, text TEXT NOT NULL, createdAt TEXT NOT NULL);
 `);
 for (const statement of [
   "ALTER TABLE users ADD COLUMN aiTrialStartedAt TEXT",
@@ -59,6 +60,8 @@ export async function getAiAccess(userId: number) {
 }
 export async function activateAiTrial(userId: number) { const existing = sqlite.prepare("SELECT aiTrialStartedAt FROM users WHERE id=?").get(userId) as { aiTrialStartedAt?: string } | undefined; if (existing?.aiTrialStartedAt) return getAiAccess(userId); const timestamp = now(); sqlite.prepare("UPDATE users SET aiTrialStartedAt=?, updatedAt=? WHERE id=?").run(timestamp, timestamp, userId); return getAiAccess(userId); }
 export async function searchAiCatalog(userId: number, query: string) { const access = await getAiAccess(userId); if (!access.active) return { access, offers: [] }; return { access, offers: await listDealOffers({ search: query, sort: "score" }) }; }
+export function listAiChatMessages(userId: number) { return sqlite.prepare("SELECT id, role, text, createdAt FROM aiChatMessages WHERE userId=? ORDER BY id ASC LIMIT 100").all(userId) as Array<{ id: number; role: "user" | "bot"; text: string; createdAt: string }>; }
+export function saveAiChatMessage(input: { userId: number; role: "user" | "bot"; text: string }) { const result = sqlite.prepare("INSERT INTO aiChatMessages (userId,role,text,createdAt) VALUES (?,?,?,?)").run(input.userId, input.role, input.text.trim(), now()); return { id: Number(result.lastInsertRowid), ...input, createdAt: now() }; }
 export async function upsertUser(user: InsertUser): Promise<void> { if (!user.openId) throw new Error("User openId is required"); const existing = await getUserByOpenId(user.openId); if (existing) { sqlite.prepare("UPDATE users SET name=?,email=?,loginMethod=?,role=?,updatedAt=?,lastSignedIn=? WHERE id=?").run(user.name ?? existing.name, user.email ?? existing.email, user.loginMethod ?? existing.loginMethod, user.role ?? existing.role, now(), now(), existing.id); return; } const timestamp = now(); sqlite.prepare("INSERT INTO users (openId,name,email,loginMethod,role,createdAt,updatedAt,lastSignedIn) VALUES (?,?,?,?,?,?,?,?)").run(user.openId, user.name ?? null, user.email ?? null, user.loginMethod ?? null, user.role ?? "user", timestamp, timestamp, timestamp); }
 export async function getUserByOpenId(openId: string) { const row = sqlite.prepare("SELECT * FROM users WHERE openId = ?").get(openId) as Record<string, unknown> | undefined; return row ? toUser(row) : undefined; }
 
