@@ -40,3 +40,11 @@ button:active { transform: scale(.97); }
 .dh-globe-art::after { content: ""; position: absolute; inset: 12%; border-radius: 50%; background: linear-gradient(180deg, transparent 42%, rgba(60,194,255,.32) 50%, transparent 58%); animation: dh-locator-scan 4s ease-in-out infinite; pointer-events: none; }
 @keyframes dh-locator-glow { 0%, 100% { opacity: .55; } 50% { opacity: 1; } }
 .dh-globe-art { animation: dh-globe 14s linear infinite, dh-locator-glow 3s ease-in-out infinite; }
+
+.dh-locator-app { background-image: radial-gradient(circle at 50% 16%, rgba(0,112,255,.14), transparent 30rem); }
+.dh-exact-rays { background: radial-gradient(ellipse at center, rgba(0,126,255,.24), transparent 58%), repeating-conic-gradient(from 0deg, rgba(0,118,255,.1) 0deg 1deg, transparent 1deg 13deg); mask-image: radial-gradient(ellipse, black, transparent 75%); }
+.dh-exact-globe { animation: dh-globe 15s linear infinite, dh-locator-glow 3s ease-in-out infinite; filter: drop-shadow(0 0 26px rgba(0,128,255,.9)); }
+.dh-exact-contours { background: repeating-linear-gradient(0deg, transparent 0 14px, rgba(40,178,255,.26) 15px 16px), repeating-linear-gradient(90deg, transparent 0 14px, rgba(40,178,255,.22) 15px 16px); mask-image: radial-gradient(circle, black 42%, transparent 72%); }
+.dh-exact-orbit { animation: dh-orbit 8s linear infinite; box-shadow: 0 0 12px rgba(0,135,255,.7); }
+.dh-exact-orbit-two { animation-direction: reverse; animation-duration: 11s; }
+@media (prefers-reduced-motion: reduce) { .dh-exact-globe, .dh-exact-orbit, .dh-exact-rays { animation: none; } }
