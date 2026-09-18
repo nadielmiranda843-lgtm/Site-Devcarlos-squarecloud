@@ -1,5 +1,5 @@
 import { Link, useLocation } from "wouter";
-import { Bell, Calculator, Crown, Menu, PackageSearch, Radar, ShieldCheck, Trophy, X } from "lucide-react";
+import { Bell, Calculator, Crown, Menu, PackageSearch, Radar, ShieldCheck, Smartphone, Trophy, X } from "lucide-react";
 import { useEffect, useState } from "react";
 import AuthDialog from "@/components/AuthDialog";
 
@@ -11,6 +11,7 @@ const items = [
   { href: "/premium", label: "Premium", icon: Crown },
   { href: "/lotes", label: "Lotes B2B", icon: ShieldCheck },
   { href: "/frete", label: "Frete & câmbio", icon: Calculator },
+  { href: "/aplicativo", label: "Aplicativo", icon: Smartphone },
 ];
 
 export default function DealsLayout({ children }: { children: React.ReactNode }) {
