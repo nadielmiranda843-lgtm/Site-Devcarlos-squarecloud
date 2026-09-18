@@ -48,3 +48,8 @@ button:active { transform: scale(.97); }
 .dh-exact-orbit { animation: dh-orbit 8s linear infinite; box-shadow: 0 0 12px rgba(0,135,255,.7); }
 .dh-exact-orbit-two { animation-direction: reverse; animation-duration: 11s; }
 @media (prefers-reduced-motion: reduce) { .dh-exact-globe, .dh-exact-orbit, .dh-exact-rays { animation: none; } }
+
+.dh-chat-panel { border-color: #287bd8 !important; background: linear-gradient(145deg, rgba(7,35,78,.98), rgba(4,19,45,.98)) !important; }
+.dh-bubble-bot { color: #d8e9ff; background: linear-gradient(135deg, #123d83, #0a285b); border: 1px solid #2b7bdb; box-shadow: 0 5px 18px rgba(0,67,160,.3); }
+.dh-bubble-user { color: #fff; background: linear-gradient(135deg, #087fe8, #0754b5); border: 1px solid #39a6ff; box-shadow: 0 5px 18px rgba(0,101,224,.35); }
+@media (max-height: 700px) { .dh-locator-app main section:first-child { height: 280px; } .dh-chat-panel { margin-top: -.25rem; } }
