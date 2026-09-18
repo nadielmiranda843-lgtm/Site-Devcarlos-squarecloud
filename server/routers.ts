@@ -4,7 +4,7 @@ import { systemRouter } from "./_core/systemRouter";
 import { protectedProcedure, publicProcedure, router } from "./_core/trpc";
 import { TRPCError } from "@trpc/server";
 import { z } from "zod";
-import { createActivityLog, createAppointment, createDealAlert, createLocalUser, createOrder, createProduct, deleteProduct, deleteService, getSiteSettings, listActivityLogs, listDealAlerts, listDealOffers, listDealSources, listFavorites, listOrders, listProducts, listServices, listUsers, createService, saveSiteSettings, toggleFavorite, updateLocalProfile, updateOrderStatus, updateProduct, updateService, updateUserRole, verifyLocalCredentials } from "./db";
+import { activateAiTrial, createActivityLog, createAppointment, createDealAlert, createLocalUser, createOrder, createProduct, deleteProduct, deleteService, getAiAccess, getSiteSettings, listActivityLogs, listDealAlerts, listDealOffers, listDealSources, listFavorites, listOrders, listProducts, listServices, listUsers, createService, saveSiteSettings, searchAiCatalog, toggleFavorite, updateLocalProfile, updateOrderStatus, updateProduct, updateService, updateUserRole, verifyLocalCredentials } from "./db";
 import { products } from "../drizzle/schema";
 import { createPowerPetCheckout } from "./stripe";
 import { sdk } from "./_core/sdk";
@@ -43,6 +43,11 @@ export const appRouter = router({
     toggleFavorite: protectedProcedure.input(z.object({ offerId: z.number().int().positive() })).mutation(async ({ input, ctx }) => { const result = await toggleFavorite(ctx.user.id, input.offerId); await createActivityLog({ userId: ctx.user.id, action: result.saved ? "favorite.add" : "favorite.remove", entity: "offer", metadata: input }); return result; }),
     alerts: protectedProcedure.query(({ ctx }) => listDealAlerts(ctx.user.id)),
     createAlert: protectedProcedure.input(z.object({ keyword: z.string().trim().min(2).max(120), maxPrice: z.number().positive().max(1_000_000).optional(), region: z.string().trim().max(120).optional(), channel: z.enum(["site", "email", "telegram", "discord"]).default("site") })).mutation(({ input, ctx }) => createDealAlert({ ...input, userId: ctx.user.id })),
+  }),
+  locator: router({
+    access: protectedProcedure.query(({ ctx }) => getAiAccess(ctx.user.id)),
+    activateTrial: protectedProcedure.mutation(({ ctx }) => activateAiTrial(ctx.user.id)),
+    search: protectedProcedure.input(z.object({ query: z.string().trim().min(2).max(120) })).mutation(async ({ input, ctx }) => { const result = await searchAiCatalog(ctx.user.id, input.query); if (!result.access.active) throw new TRPCError({ code: "FORBIDDEN", message: result.access.pending ? "Ative seu teste gratuito para usar o Localizador IA." : "Seu teste gratuito terminou. Ative o Premium para continuar." }); await createActivityLog({ userId: ctx.user.id, action: "ai.locator.search", entity: "dealOffer", metadata: { query: input.query } }); return result; }),
   }),
   catalog: router({ list: publicProcedure.input(z.object({ category: z.string().optional() }).optional()).query(async ({ input }) => { const dbProducts = await listProducts(); return input?.category ? dbProducts.filter((p: any) => p.category === input.category) : dbProducts; }) }),
   appointments: router({ request: protectedProcedure.input(z.object({ petName: z.string().min(1), service: z.string().min(1), startsAt: z.coerce.date(), transport: z.enum(["store", "pickup"]), pickupAddress: z.string().optional() })).mutation(async ({ input, ctx }) => ({ success: true, requestedBy: ctx.user.id, ...(await createAppointment({ ...input, userId: ctx.user.id })) })) }),

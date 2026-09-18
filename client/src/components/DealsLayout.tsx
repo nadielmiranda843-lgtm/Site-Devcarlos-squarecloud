@@ -1,10 +1,11 @@
 import { Link, useLocation } from "wouter";
-import { BarChart3, Bell, Calculator, ChevronRight, Crown, Menu, PackageSearch, Radar, Search, ShieldCheck, Smartphone, Trophy, X } from "lucide-react";
+import { BarChart3, Bell, Calculator, ChevronRight, Crown, Globe2, Menu, PackageSearch, Radar, Search, ShieldCheck, Smartphone, Trophy, X } from "lucide-react";
 import { useEffect, useState } from "react";
 import AuthDialog from "@/components/AuthDialog";
 
 const items = [
   { href: "/", label: "Radar", icon: Radar },
+  { href: "/localizador", label: "Localizador IA", icon: Globe2 },
   { href: "/ofertas", label: "Ofertas", icon: PackageSearch },
   { href: "/comparar", label: "Comparar", icon: BarChart3 },
   { href: "/alertas", label: "Alertas", icon: Bell },
