@@ -54,7 +54,7 @@ button:active { transform: scale(.97); }
 .dh-bubble-user { color: #fff; background: linear-gradient(135deg, #087fe8, #0754b5); border: 1px solid #39a6ff; box-shadow: 0 5px 18px rgba(0,101,224,.35); }
 @media (max-height: 700px) { .dh-locator-app main section:first-child { height: 280px; } .dh-chat-panel { margin-top: -.25rem; } }
 
-.dh-locator-app { position: fixed; inset: 0; width: 100%; height: 100dvh; overflow: hidden; overscroll-behavior: none; touch-action: none; }
+.dh-locator-app { position: fixed; inset: 0; width: 100%; height: 100dvh; overflow: hidden; overscroll-behavior-y: auto; touch-action: pan-y; }
 .dh-locator-app input, .dh-locator-app button, .dh-locator-app a { touch-action: manipulation; }
 .dh-locator-bottom { padding-bottom: max(.75rem, env(safe-area-inset-bottom)); }
-.dh-locator-app main { overscroll-behavior: none; }
+.dh-locator-app main { overscroll-behavior-y: auto; touch-action: pan-y; }

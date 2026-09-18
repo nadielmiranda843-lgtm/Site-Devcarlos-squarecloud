@@ -1,7 +1,8 @@
 import { Link, useLocation } from "wouter";
-import { BarChart3, Bell, Calculator, ChevronRight, Crown, Globe2, Menu, PackageSearch, Radar, Search, ShieldCheck, Smartphone, Trophy, X } from "lucide-react";
+import { BarChart3, Bell, Calculator, ChevronRight, Crown, Globe2, Menu, PackageSearch, Radar, Search, ShieldCheck, Smartphone, Trophy, UserRound, X } from "lucide-react";
 import { useEffect, useState } from "react";
 import AuthDialog from "@/components/AuthDialog";
+import { useAuth } from "@/_core/hooks/useAuth";
 
 const items = [
   { href: "/", label: "Radar", icon: Radar },
@@ -19,6 +20,7 @@ const tools = [
 
 export default function DealsLayout({ children }: { children: React.ReactNode }) {
   const [location] = useLocation();
+  const { user } = useAuth();
   const [open, setOpen] = useState(false);
   const [authOpen, setAuthOpen] = useState(false);
   const [authMode, setAuthMode] = useState<"login" | "register">("login");
@@ -43,7 +45,7 @@ export default function DealsLayout({ children }: { children: React.ReactNode })
       <main className="min-h-[calc(100vh-76px)]">{children}</main>
     </div>
     {open && <div className="fixed inset-0 z-50 lg:hidden"><button onClick={() => setOpen(false)} className="absolute inset-0 bg-black/75" aria-label="Fechar menu" /><aside className="absolute inset-y-0 left-0 flex w-[292px] flex-col border-r border-[#202b47] bg-[#0b1020] shadow-2xl"><div className="flex items-center justify-between p-5"><Brand /><button onClick={() => setOpen(false)} className="grid size-9 place-items-center rounded-lg text-[#aebbd2]" aria-label="Fechar menu"><X className="size-5" /></button></div><div className="px-3"><button onClick={() => { setOpen(false); setAuthMode("login"); setAuthOpen(true); }} className="mb-5 flex w-full items-center gap-3 rounded-xl border border-[#2d3e68] bg-[#111a32] p-3 text-left"><span className="grid size-8 place-items-center rounded-lg bg-[#3154ff] text-xs font-black">DH</span><span className="text-xs font-semibold">Entrar ou criar conta<small className="mt-1 block text-[10px] font-normal text-[#8290aa]">Salve ofertas e receba alertas</small></span></button></div><nav className="flex-1 space-y-1 overflow-y-auto px-3">{nav(items)}<p className="mb-2 mt-7 px-3 font-mono text-[9px] uppercase tracking-[.2em] text-[#63718d]">Ferramentas</p>{nav(tools)}</nav></aside></div>}
-    <nav className="fixed inset-x-0 bottom-0 z-40 grid grid-cols-5 border-t border-[#202b47] bg-[#0b1020]/95 px-1 py-2 backdrop-blur-xl lg:hidden">{items.map(({ href, label, icon: Icon }) => <Link key={href} href={href} className={`flex flex-col items-center gap-1 py-1 text-[9px] font-semibold ${active(href) ? "text-[#8ea5ff]" : "text-[#71809d]"}`}><Icon className="size-[18px]" /><span>{label}</span></Link>)}</nav>
+    <nav className="fixed inset-x-0 bottom-0 z-40 grid grid-cols-5 border-t border-[#202b47] bg-[#0b1020]/95 px-1 py-2 pb-[max(.5rem,env(safe-area-inset-bottom))] backdrop-blur-xl lg:hidden">{items.slice(0, 4).map(({ href, label, icon: Icon }) => <Link key={href} href={href} className={`flex flex-col items-center gap-1 py-1 text-[9px] font-semibold ${active(href) ? "text-[#8ea5ff]" : "text-[#71809d]"}`}><Icon className="size-[18px]" /><span>{label}</span></Link>)}<Link href={user ? "/perfil" : "/entrar"} className={`flex flex-col items-center gap-1 py-1 text-[9px] font-semibold ${active(user ? "/perfil" : "/entrar") ? "text-[#8ea5ff]" : "text-[#71809d]"}`}><UserRound className="size-[18px]" /><span>{user ? "Perfil" : "Entrar"}</span></Link></nav>
     <AuthDialog open={authOpen} onOpenChange={setAuthOpen} initialMode={authMode} />
   </div>;
 }
