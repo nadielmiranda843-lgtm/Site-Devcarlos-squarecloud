@@ -68,9 +68,28 @@ createRoot(document.getElementById("root")!).render(
 );
 
 if ("serviceWorker" in navigator && import.meta.env.PROD) {
-  window.addEventListener("load", () => {
-    navigator.serviceWorker.register("/sw.js").catch(error => {
-      console.warn("DealHunter PWA: não foi possível registrar o cache offline", error);
-    });
+  window.addEventListener("load", async () => {
+    try {
+      const registration = await navigator.serviceWorker.register("/sw.js", { updateViaCache: "none" });
+      await registration.update();
+      registration.addEventListener("updatefound", () => {
+        const worker = registration.installing;
+        if (!worker) return;
+        worker.addEventListener("statechange", () => {
+          if (worker.state === "installed" && navigator.serviceWorker.controller) {
+            worker.postMessage({ type: "SKIP_WAITING" });
+          }
+        });
+      });
+      navigator.serviceWorker.addEventListener("controllerchange", () => {
+        if (!sessionStorage.getItem("dealhunter-pwa-reloaded")) {
+          sessionStorage.setItem("dealhunter-pwa-reloaded", "1");
+          window.location.reload();
+        }
+      }, { once: true });
+      window.setTimeout(() => sessionStorage.removeItem("dealhunter-pwa-reloaded"), 5000);
+    } catch (error) {
+      console.warn("DealHunter PWA: não foi possível atualizar o cache offline", error);
+    }
   });
 }
