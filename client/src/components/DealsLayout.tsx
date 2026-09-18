@@ -1,5 +1,5 @@
 import { Link, useLocation } from "wouter";
-import { Bell, Calculator, Crown, Menu, PackageSearch, Radar, ShieldCheck, Smartphone, Trophy, X } from "lucide-react";
+import { BarChart3, Bell, Calculator, Crown, Menu, PackageSearch, Radar, ShieldCheck, Smartphone, Trophy, X } from "lucide-react";
 import { useEffect, useState } from "react";
 import AuthDialog from "@/components/AuthDialog";
 
