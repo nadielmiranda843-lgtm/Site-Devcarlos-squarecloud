@@ -32,8 +32,11 @@ async function findAvailablePort(startPort: number = 3000): Promise<number> {
 }
 
 async function startServer() {
-  if (!ENV.adminPassword) throw new Error("ADMIN_PASSWORD deve ser configurada antes de iniciar a aplicação.");
-  await ensureInitialAdmin({ name: ENV.adminName, email: ENV.adminEmail, password: ENV.adminPassword });
+  if (ENV.adminPassword) {
+    await ensureInitialAdmin({ name: ENV.adminName, email: ENV.adminEmail, password: ENV.adminPassword });
+  } else {
+    console.warn("ADMIN_PASSWORD não configurada; o servidor iniciará sem criar ou atualizar a conta administrativa.");
+  }
   const app = express();
   const server = createServer(app);
   app.set("trust proxy", 1);
