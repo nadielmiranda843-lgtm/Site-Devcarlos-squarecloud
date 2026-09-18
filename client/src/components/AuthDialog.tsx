@@ -17,6 +17,7 @@ export default function AuthDialog({ open, onOpenChange, initialMode = "login" }
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirm, setConfirm] = useState("");
+  const [acceptedPolicy, setAcceptedPolicy] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const login = trpc.auth.login.useMutation({
     onSuccess: async () => {
@@ -42,6 +43,7 @@ export default function AuthDialog({ open, onOpenChange, initialMode = "login" }
     setMode(nextMode);
     setPassword("");
     setConfirm("");
+    setAcceptedPolicy(false);
   };
 
   const submit = () => {
@@ -50,6 +52,7 @@ export default function AuthDialog({ open, onOpenChange, initialMode = "login" }
     if (!name.trim()) return toast.error("Informe seu nome.");
     if (password.length < 10) return toast.error("Use uma senha com pelo menos 10 caracteres.");
     if (password !== confirm) return toast.error("As senhas precisam ser iguais.");
+    if (!acceptedPolicy) return toast.error("Aceite a política de privacidade para criar sua conta.");
     register.mutate({ name: name.trim(), email: email.trim(), password });
   };
 
@@ -71,7 +74,7 @@ export default function AuthDialog({ open, onOpenChange, initialMode = "login" }
               {mode === "register" && <label className="block text-xs font-medium text-[#d9cce1]">Nome completo<div className="relative mt-2"><UserRound className="absolute left-3 top-3 size-4 text-[#80678f]" /><Input value={name} onChange={event => setName(event.target.value)} placeholder="Como podemos chamar você?" autoComplete="name" className="border-white/10 bg-white/[.04] pl-10 text-white placeholder:text-[#72647c] focus-visible:ring-[#a855f7]" /></div></label>}
               <label className="block text-xs font-medium text-[#d9cce1]">E-mail<Input type="email" value={email} onChange={event => setEmail(event.target.value)} placeholder="voce@exemplo.com" autoComplete="email" className="mt-2 border-white/10 bg-white/[.04] text-white placeholder:text-[#72647c] focus-visible:ring-[#a855f7]" /></label>
               <label className="block text-xs font-medium text-[#d9cce1]">Senha<div className="relative mt-2"><Input type={showPassword ? "text" : "password"} value={password} onChange={event => setPassword(event.target.value)} placeholder={mode === "register" ? "Mínimo de 10 caracteres" : "Sua senha"} autoComplete={mode === "register" ? "new-password" : "current-password"} className="border-white/10 bg-white/[.04] pr-11 text-white placeholder:text-[#72647c] focus-visible:ring-[#a855f7]" /><button type="button" onClick={() => setShowPassword(value => !value)} className="absolute right-3 top-2.5 text-[#80678f] hover:text-white" aria-label={showPassword ? "Ocultar senha" : "Mostrar senha"}>{showPassword ? <EyeOff className="size-4" /> : <Eye className="size-4" />}</button></div></label>
-              {mode === "register" && <label className="block text-xs font-medium text-[#d9cce1]">Confirmar senha<Input type="password" value={confirm} onChange={event => setConfirm(event.target.value)} placeholder="Repita sua senha" autoComplete="new-password" className="mt-2 border-white/10 bg-white/[.04] text-white placeholder:text-[#72647c] focus-visible:ring-[#a855f7]" /></label>}
+              {mode === "register" && <><label className="block text-xs font-medium text-[#d9cce1]">Confirmar senha<Input type="password" value={confirm} onChange={event => setConfirm(event.target.value)} placeholder="Repita sua senha" autoComplete="new-password" className="mt-2 border-white/10 bg-white/[.04] text-white placeholder:text-[#72647c] focus-visible:ring-[#a855f7]" /></label><label className="flex items-start gap-2 text-[11px] leading-relaxed text-[#a99bb2]"><input type="checkbox" checked={acceptedPolicy} onChange={event => setAcceptedPolicy(event.target.checked)} className="mt-0.5 size-4 accent-[#a855f7]" /> <span>Li e aceito a <a href="/politica-de-privacidade" target="_blank" rel="noreferrer" className="font-bold text-[#c084fc] underline underline-offset-2">Política de Privacidade</a> do DealHunter.</span></label></>}
               <Button type="button" onClick={submit} disabled={busy} className="mt-2 h-11 w-full rounded-xl bg-[#a855f7] font-bold text-white shadow-[0_8px_24px_rgba(168,85,247,.25)] hover:bg-[#9333ea]">{busy ? "Aguarde..." : mode === "login" ? "Entrar na minha conta" : "Criar minha conta grátis"}<ArrowRight className="ml-2 size-4" /></Button>
             </div>
             <p className="mt-5 text-center text-[11px] text-[#84758d]">Ao continuar, você concorda com a política de privacidade do DealHunter.</p>
